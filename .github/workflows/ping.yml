@@ -1,6 +1,7 @@
 name: Ping Server
 
 on:
+  workflow_dispatch:  # ✅ permet de lancer manuellement
   schedule:
     # Heures exactes (converties en UTC)
     - cron: "0 1 * * *"
@@ -30,4 +31,4 @@ jobs:
       - name: Ping server
         run: |
           echo "Pinging server at $(date -u)"
-          curl -s https://ropainx.onrender.com > /dev/null
+          curl -v https://ropainx.onrender.com || echo "Ping failed"
