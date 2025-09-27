@@ -1,28 +1,10 @@
 name: Ping Server
 
 on:
-  workflow_dispatch:  # ✅ permet de lancer manuellement
+  workflow_dispatch:   # ✅ Lancer manuellement si besoin
   schedule:
-    # Heures exactes (converties en UTC)
-    - cron: "0 1 * * *"
-    - cron: "0 3 * * *"
-    - cron: "0 5 * * *"
-    - cron: "0 7 * * *"
-    - cron: "0 9 * * *"
-    - cron: "0 13 * * *"
-    - cron: "0 15 * * *"
-    - cron: "0 17 * * *"
-    - cron: "0 19 * * *"
-    # +8 minutes après
-    - cron: "8 1 * * *"
-    - cron: "8 3 * * *"
-    - cron: "8 5 * * *"
-    - cron: "8 7 * * *"
-    - cron: "8 9 * * *"
-    - cron: "8 13 * * *"
-    - cron: "8 15 * * *"
-    - cron: "8 17 * * *"
-    - cron: "8 19 * * *"
+    # Toutes les 8 minutes (cron en UTC)
+    - cron: "*/8 * * * *"
 
 jobs:
   ping:
@@ -31,4 +13,4 @@ jobs:
       - name: Ping server
         run: |
           echo "Pinging server at $(date -u)"
-          curl -v https://ropainx.onrender.com || echo "Ping failed"
+          curl -s -o /dev/null -w "%{http_code}\n" https://ropainx.onrender.com || echo "Ping failed"
